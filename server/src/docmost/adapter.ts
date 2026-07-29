@@ -1,15 +1,28 @@
 import { getCredentials } from "../security/credentials.js";
 
+// Sinaliza especificamente "nenhuma credencial no cofre" (vs. erro de rede/API)
+// para quem chama login() poder disparar o fluxo de onboarding (elicitation)
+// em vez de só propagar um erro genérico.
+export class MissingCredentialsError extends Error {
+  constructor() {
+    super("Nenhuma credencial configurada. Rode 'docmost-mcp login' primeiro.");
+    this.name = "MissingCredentialsError";
+  }
+}
+
 export class DocmostAdapter {
   private jwt: string | null = null;
-
-  constructor(private readonly baseUrl: string) {}
+  // Resolvido a partir do cofre de credenciais no login(), não mais de env var
+  // fixo no construtor — permite trocar de instância Docmost sem reiniciar
+  // configuração externa, e é o mesmo dado que o fluxo de onboarding grava.
+  private baseUrl: string | null = null;
 
   async login(): Promise<void> {
     const creds = await getCredentials();
     if (!creds) {
-      throw new Error("Nenhuma credencial configurada. Rode 'docmost-mcp login' primeiro.");
+      throw new MissingCredentialsError();
     }
+    this.baseUrl = creds.baseUrl;
 
     const start = Date.now();
     const res = await fetch(`${this.baseUrl}/api/auth/login`, {
@@ -50,6 +63,10 @@ export class DocmostAdapter {
   }
 
   private async doRequest(method: string, path: string, body?: unknown): Promise<Response> {
+    // Só é chamado depois de login() ter resolvido baseUrl (request() garante isso).
+    if (!this.baseUrl) {
+      throw new MissingCredentialsError();
+    }
     const start = Date.now();
     const res = await fetch(`${this.baseUrl}${path}`, {
       method,

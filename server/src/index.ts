@@ -7,14 +7,13 @@ import { registerPageTools } from "./tools/pages.js";
 import { registerSearchTools } from "./tools/search.js";
 import { registerCommentTools } from "./tools/comments.js";
 import { runGarbageCollection } from "./logging/gc.js";
+import { ensureCredentialsInteractive } from "./security/onboarding.js";
 
-const baseUrl = process.env.DOCMOST_BASE_URL;
-if (!baseUrl) {
-  console.error("DOCMOST_BASE_URL não configurado (defina no .mcp.json ou no ambiente).");
-  process.exit(1);
-}
-
-const adapter = new DocmostAdapter(baseUrl);
+// baseUrl não vem mais de env var — o adapter resolve a partir do cofre de
+// credenciais (gravado pelo login via CLI ou pelo onboarding interativo logo
+// abaixo). Isso elimina a necessidade de configurar DOCMOST_BASE_URL duas
+// vezes em lugares diferentes (env do .mcp.json/host e credenciais salvas).
+const adapter = new DocmostAdapter();
 
 // GC do log de mutações (etapa 11, §5.1) — best-effort, nunca lança.
 await runGarbageCollection();
@@ -45,3 +44,8 @@ registerCommentTools(server, adapter);
 
 const transport = new StdioServerTransport();
 await server.connect(transport);
+
+// Só depois de conectado o server consegue enviar elicitation/create ao host
+// (é uma requisição no mesmo canal JSON-RPC do stdio) — por isso vem depois
+// de connect(), não antes.
+await ensureCredentialsInteractive(server);

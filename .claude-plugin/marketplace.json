@@ -13,7 +13,7 @@
       },
       "displayName": "Docmost MCP Server",
       "description": "MCP local para Docmost self-hosted (leitura e escrita), com autorização delegada ao RBAC do Docmost.",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "license": "MIT",
       "keywords": ["docmost", "mcp", "wiki", "markdown"]
     }

@@ -1,14 +1,9 @@
 import { DocmostAdapter } from "./docmost/adapter.js";
 
+// baseUrl vem do cofre de credenciais (rode 'node bin/cli.js login' antes),
+// não mais de env var — mesma fonte usada pelo server real.
 async function main(): Promise<void> {
-  const baseUrl = process.env.DOCMOST_BASE_URL;
-  if (!baseUrl) {
-    console.error("Defina DOCMOST_BASE_URL antes de rodar o smoke test.");
-    process.exitCode = 1;
-    return;
-  }
-
-  const adapter = new DocmostAdapter(baseUrl);
+  const adapter = new DocmostAdapter();
   await adapter.login();
   console.log("login ok");
 

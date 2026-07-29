@@ -4,7 +4,7 @@ Plugin + servidor MCP local para **Docmost self-hosted** — dá ao Claude Code 
 
 > **Modelo de autorização:** este MCP não define permissões próprias. Toda operação roda com a identidade de quem fez login — o que você consegue ler ou escrever é exatamente o que o seu papel/permissões já concedem no Docmost. Escritas exigem **confirmação explícita** antes de executar (ver [Segurança](#segurança-e-privacidade)).
 
-**Versão validada:** `docmost-mcp 1.0.0` testado contra **Docmost v0.80.2** (self-hosted). A API interna usada aqui não é versionada oficialmente pelo Docmost — se você estiver numa versão bem diferente, valide os endpoints antes de confiar em escrita (ver [Compatibilidade](#compatibilidade)).
+**Versão validada:** `docmost-mcp 1.1.0` testado contra **Docmost v0.80.2** (self-hosted). A API interna usada aqui não é versionada oficialmente pelo Docmost — se você estiver numa versão bem diferente, valide os endpoints antes de confiar em escrita (ver [Compatibilidade](#compatibilidade)).
 
 ## Instalação
 
@@ -29,7 +29,7 @@ npm run build
 Depois registre o servidor no Claude Code (escopo do projeto onde você quer usar as tools):
 
 ```
-claude mcp add docmost --scope local -e DOCMOST_BASE_URL=https://docs.suaempresa.com -- node /caminho/completo/para/docmost-mcp/server/dist/index.js
+claude mcp add docmost --scope local -- node /caminho/completo/para/docmost-mcp/server/dist/index.js
 ```
 
 ## Pré-requisitos por sistema operacional
@@ -46,13 +46,17 @@ Sem cofre nativo disponível (ex. servidor Linux headless), o plugin cai automat
 
 ## Setup (uma vez, por máquina/pessoa)
 
+Na primeira vez que o Claude Code conectar ao plugin sem credenciais salvas, o próprio servidor MCP pede a base URL, e-mail e senha via um formulário interativo (elicitation) — nada para rodar manualmente antes. **Aviso:** esse formulário é do host (Claude Code), não do terminal, e não mascara a senha na tela (o protocolo MCP não tem campo de senha dedicado); evite compartilhar tela nesse momento. Depois de enviado, a senha é gravada no cofre nativo do SO (ou no fallback cifrado) e nunca fica em texto plano em disco.
+
+Alternativa (mascarada, via terminal), útil para configurar antes de qualquer conexão ou trocar de conta:
+
 ```
 node server/bin/cli.js login
 ```
 
 Pede a base URL do Docmost, e-mail e senha, e grava no cofre (ou no fallback cifrado). A senha nunca é ecoada no terminal nem fica em nenhum arquivo do repositório.
 
-Depois disso, o Claude Code já tem acesso às tools do Docmost com as permissões da sua conta.
+Nos dois casos, depois disso o Claude Code já tem acesso às tools do Docmost com as permissões da sua conta — não é mais necessário configurar `DOCMOST_BASE_URL` como variável de ambiente.
 
 ## Tools disponíveis
 

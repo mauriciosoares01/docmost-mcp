@@ -8,12 +8,14 @@ Plugin + servidor MCP local para **Docmost self-hosted** — dá ao Claude Code 
 
 ## Instalação
 
-### Via marketplace (recomendado, quando publicado)
+### Via marketplace (recomendado)
 
 ```
 /plugin marketplace add mauriciosoares01/docmost-mcp
 /plugin install docmost-mcp
 ```
+
+Na primeira execução, o servidor instala as dependências e compila automaticamente (`server/bin/start.js`) — não precisa rodar `npm install`/`npm run build` manualmente nesse caminho.
 
 ### Via clone manual
 

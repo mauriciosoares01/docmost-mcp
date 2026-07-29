@@ -2,7 +2,7 @@
   "mcpServers": {
     "docmost": {
       "command": "node",
-      "args": ["${CLAUDE_PLUGIN_ROOT}/server/dist/index.js"],
+      "args": ["${CLAUDE_PLUGIN_ROOT}/server/bin/start.js"],
       "env": { "DOCMOST_BASE_URL": "" }
     }
   }

@@ -1,0 +1,10 @@
+{
+  "name": "docmost-mcp",
+  "displayName": "Docmost MCP Server",
+  "version": "1.0.0",
+  "description": "MCP local para Docmost self-hosted (leitura e escrita), com autorização delegada ao RBAC do Docmost.",
+  "homepage": "https://github.com/mauriciosoares01/docmost-mcp",
+  "repository": "https://github.com/mauriciosoares01/docmost-mcp",
+  "license": "MIT",
+  "keywords": ["docmost", "mcp", "wiki", "markdown", "documentation"]
+}

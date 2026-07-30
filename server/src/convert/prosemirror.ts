@@ -549,8 +549,12 @@ function parseListItem(cursor: Cursor, indent: number, kind: ListKind): ProseMir
   }
 
   const blocks = parseBlocks({ lines: contentLines, pos: 0 }, 0);
+  // taskList do Docmost usa a extensão TaskItem do Tiptap (@tiptap/extension-list),
+  // cujo nó tem tipo "taskItem" — distinto de "listItem" usado por bullet/ordered.
+  // Emitir "listItem" com attrs.checked (como antes) produz um nó que o schema do
+  // editor não reconhece como item de checklist.
   const node: ProseMirrorNode = {
-    type: "listItem",
+    type: kind === "task" ? "taskItem" : "listItem",
     content: blocks.length ? blocks : [{ type: "paragraph", content: [] }],
   };
   if (kind === "task") node.attrs = { checked };

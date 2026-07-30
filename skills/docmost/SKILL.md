@@ -43,6 +43,18 @@ Pede base URL do Docmost, e-mail e senha, e grava no cofre nativo do SO (libsecr
 | `delete_page` | Remove página — **irreversível**, confirmação reforçada |
 | `create_comment` | Comenta em uma página |
 
+## Formatação suportada no Markdown
+
+Além de títulos, listas, tabelas, código, citações e imagens, `create_page`/`update_page` aceitam checklist (task list) com a sintaxe padrão GFM:
+
+```
+- [ ] item pendente
+- [x] item concluído
+  - [ ] subitem (indentado com 2 espaços)
+```
+
+Isso é convertido para o nó nativo de checklist do Docmost (checkbox clicável no editor), não para uma lista de texto comum.
+
 ## Comportamento de confirmação
 
 Toda tool de escrita dispara um prompt de confirmação (via `elicitInput`) descrevendo o alvo e o efeito antes de chamar o Docmost. **Nunca tente contornar isso** nem simule a confirmação — é o usuário quem decide. Se ele recusar, a operação é cancelada sem nenhuma chamada de rede. `delete_page` reforça a mensagem, deixando explícito que é irreversível.

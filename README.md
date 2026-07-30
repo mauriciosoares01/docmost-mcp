@@ -1,5 +1,7 @@
 # docmost-mcp
 
+![docmost-mcp](assets/header.png)
+
 Plugin + servidor MCP local para **Docmost self-hosted** — dá ao Claude Code tools de leitura e escrita (spaces, páginas, comentários) usando a API interna do Docmost (a mesma que o frontend usa), autenticado com **e-mail e senha próprios de cada pessoa**.
 
 > **Modelo de autorização:** este MCP não define permissões próprias. Toda operação roda com a identidade de quem fez login — o que você consegue ler ou escrever é exatamente o que o seu papel/permissões já concedem no Docmost. Escritas exigem **confirmação explícita** antes de executar (ver [Segurança](#segurança-e-privacidade)).

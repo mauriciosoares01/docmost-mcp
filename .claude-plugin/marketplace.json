@@ -1,5 +1,6 @@
 {
   "name": "docmost-mcp-marketplace",
+  "description": "Marketplace com o plugin MCP para integração do Claude Code com um Docmost self-hosted.",
   "owner": {
     "name": "mauriciosoares01"
   },

@@ -7,8 +7,8 @@
     {
       "name": "docmost-mcp",
       "source": {
-        "source": "github",
-        "repo": "mauriciosoares01/docmost-mcp",
+        "source": "url",
+        "url": "https://github.com/mauriciosoares01/docmost-mcp.git",
         "ref": "main"
       },
       "displayName": "Docmost MCP Server",

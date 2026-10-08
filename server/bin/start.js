@@ -14,7 +14,9 @@ const distEntry = join(serverDir, "dist", "index.js");
 
 if (!existsSync(join(serverDir, "node_modules")) || !existsSync(distEntry)) {
   const stdio = ["ignore", 2, 2];
-  execSync("npm install --silent", { cwd: serverDir, stdio });
+  // npm ci (não npm install): instala exatamente o package-lock.json do repo,
+  // sem reescrevê-lo dentro do diretório do plugin.
+  execSync("npm ci --silent", { cwd: serverDir, stdio });
   execSync("npm run build --silent", { cwd: serverDir, stdio });
 }
 

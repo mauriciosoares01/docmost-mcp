@@ -10,13 +10,15 @@ Servidor MCP local (`docmost-mcp`) que fala com um Docmost self-hosted pela API 
 
 ## Setup (uma vez, por máquina/pessoa)
 
-Antes de qualquer tool funcionar, o usuário precisa logar:
+Sem credenciais salvas, o próprio servidor pede base URL, e-mail e senha na primeira conexão, via formulário do Claude Code (elicitation), e grava no cofre nativo do SO (libsecret/Keychain/Credential Manager, com fallback cifrado se não houver cofre disponível). O formulário não mascara a senha.
+
+Alternativa mascarada, no terminal (útil para trocar de conta). Com o plugin instalado via marketplace, o caminho fica no cache do Claude Code e só existe depois que o servidor iniciou pelo menos uma vez:
 
 ```
-node server/bin/cli.js login
+node ~/.claude/plugins/cache/docmost-mcp-marketplace/docmost-mcp/<versão>/server/bin/cli.js login
 ```
 
-Pede base URL do Docmost, e-mail e senha, e grava no cofre nativo do SO (libsecret/Keychain/Credential Manager, com fallback cifrado se não houver cofre disponível). Nunca peça a senha diretamente no chat — sempre direcione para esse comando no terminal.
+Em clone manual, o equivalente é `node server/bin/cli.js login` na raiz do repositório. Nunca peça a senha diretamente no chat — sempre direcione para o formulário ou para esse comando no terminal.
 
 ## Tools disponíveis
 

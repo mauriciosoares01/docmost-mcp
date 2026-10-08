@@ -50,11 +50,19 @@ Sem cofre nativo disponível (ex. servidor Linux headless), o plugin cai automat
 
 Na primeira vez que o Claude Code conectar ao plugin sem credenciais salvas, o próprio servidor MCP pede a base URL, e-mail e senha via um formulário interativo (elicitation) — nada para rodar manualmente antes. **Aviso:** esse formulário é do host (Claude Code), não do terminal, e não mascara a senha na tela (o protocolo MCP não tem campo de senha dedicado); evite compartilhar tela nesse momento. Depois de enviado, a senha é gravada no cofre nativo do SO (ou no fallback cifrado) e nunca fica em texto plano em disco.
 
-Alternativa (mascarada, via terminal), útil para configurar antes de qualquer conexão ou trocar de conta:
+Alternativa (mascarada, via terminal), útil para trocar de conta ou preferir não digitar a senha no formulário:
 
-```
-node server/bin/cli.js login
-```
+- **Instalado via marketplace:** o plugin fica no cache do Claude Code. O comando só funciona depois que o servidor iniciou pelo menos uma vez (é nesse momento que ele é compilado):
+
+  ```
+  node ~/.claude/plugins/cache/docmost-mcp-marketplace/docmost-mcp/<versão>/server/bin/cli.js login
+  ```
+
+- **Clone manual:** a partir da raiz do repositório, depois do `npm run build`:
+
+  ```
+  node server/bin/cli.js login
+  ```
 
 Pede a base URL do Docmost, e-mail e senha, e grava no cofre (ou no fallback cifrado). A senha nunca é ecoada no terminal nem fica em nenhum arquivo do repositório.
 
